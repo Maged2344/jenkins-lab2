@@ -1,0 +1,22 @@
+pipeline {
+    agent {label 'agent'}
+    stages {
+        stage('Cloning our Git') {
+            steps {
+                git url:'https://github.com/mahmoud254/jenkins_nodejs_example',
+                    credentialsId: 'github_key'
+            }
+        }
+        stage('Building our image'){
+            steps {
+                sh "docker build . -t magedmohamed/myapp:v1" 
+            }
+        }
+        stage('Push image') {
+             steps {
+                 
+                    sh "docker run -d -p 80:3000 magedmohamed/myapp:v1"
+             }
+        }
+    }
+}

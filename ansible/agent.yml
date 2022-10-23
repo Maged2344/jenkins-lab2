@@ -1,0 +1,24 @@
+- become: yes
+  hosts: all
+  name: agent configure
+  remote_user: ubuntu
+  tasks:
+   - name: Set authorized key taken from file
+     authorized_key:
+        user: ubuntu
+        state: present
+        key: "{{ lookup('file', '~/.ssh/id_ed25519.pub') }}"
+   - name: Install docker
+     apt:
+        name: docker.io
+        update_cache: yes
+        state: present
+   - name: Install docker
+     apt:
+        name: openjdk-11-jdk
+        state: present
+   
+      
+    
+
+ 
